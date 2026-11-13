@@ -1,0 +1,5 @@
+# Environment Setup
+
+Install Node.js 20.9 or later, Git, VS Code, and a current browser. Verify with `node --version`, `npm --version`, and `git --version`. On Windows, use PowerShell or Git Bash; on macOS/Linux, use a terminal. Use `nvm`, `fnm`, or the platform's supported version manager to keep Node versions per project. Install project dependencies from each lockfile with `npm ci` (or the documented package manager), copy `.env.example` to `.env.local`, and never commit secrets.
+
+Create a Next.js app with `npx create-next-app@latest`; use the App Router and confirm current defaults in the [official installation guide](https://nextjs.org/docs/app/getting-started/installation). Register Firebase web apps and use the modular SDK following [Firebase's official setup guide](https://firebase.google.com/docs/web/setup). Supabase CLI v3 changed local/hosted defaults, so run `supabase --help` and check the [changelog](https://supabase.com/changelog.md) before cohort commands. Cache dependencies after a successful install, keep local copies of docs, and commit before power interruptions.

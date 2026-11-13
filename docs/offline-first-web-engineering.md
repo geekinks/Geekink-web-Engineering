@@ -1,0 +1,3 @@
+# Offline-First Web Engineering
+
+Offline-first means the core experience remains honest and useful without assuming a request can finish. Cache safe reads with a Service Worker and Cache API; persist drafts or structured local state in IndexedDB; show `Saved locally`, `Pending sync`, `Synced`, or `Needs attention`. Queue only idempotent mutations with an operation ID, retry deliberately, and define a conflict rule. Background Sync is not uniformly available, so provide a foreground retry path and never promise invisible delivery. Do not cache private data blindly; define logout and retention behaviour.
