@@ -1,24 +1,34 @@
 #!/usr/bin/env python3
-"""Fail when the published curriculum loses its required teaching structure."""
+"""Validate the active 12-week GeekInk curriculum."""
 from pathlib import Path
-import re, sys
+import sys
+
 ROOT = Path(__file__).resolve().parents[1]
-required = ["Learning objectives", "Prerequisites", "Concept explanation", "Practical examples", "Step-by-step implementation", "Hands-on exercises", "Mini challenge", "Expected output", "Assessment criteria", "Common mistakes", "Additional learning resources", "Submission instructions"]
-errors=[]
-modules = sorted((ROOT / "curriculum").glob("module-[0-9][0-9]"))
-if len(modules) != 10: errors.append(f"Expected 10 modules; found {len(modules)}")
-for number, module in enumerate(modules, 1):
-    days=sorted(module.glob("day-[0-9][0-9][0-9]"))
-    if len(days) != 10: errors.append(f"{module.name}: expected 10 days; found {len(days)}")
-    for day in days:
-        readme=day / "README.md"
-        if not readme.exists(): errors.append(f"Missing {readme.relative_to(ROOT)}"); continue
-        text=readme.read_text(encoding="utf-8")
-        if not re.search(r"^# Day \d{3}:", text, re.M): errors.append(f"Bad day title: {readme.relative_to(ROOT)}")
-        for heading in required:
-            if f"## {heading}" not in text: errors.append(f"{readme.relative_to(ROOT)}: missing {heading}")
-for p in ["README.md","docs/student-guide.md","docs/instructor-guide.md","student-engineering-project/PROJECT-SPECIFICATION.md","task/submission-template.md"]:
-    if not (ROOT/p).exists(): errors.append(f"Missing required {p}")
+weeks = sorted((ROOT / "weeks").glob("week-*"))
+required = ["monday.md", "tuesday.md", "wednesday.md", "thursday.md", "friday.md"]
+lesson_sections = [
+    "Learning objectives", "Concepts to understand", "Lesson content",
+    "Practical coding activity", "Guided example", "Independent exercises",
+    "Expected output", "Homework / assignment", "Recommended learning resources",
+]
+errors = []
+if len(weeks) != 12:
+    errors.append(f"Expected 12 weeks; found {len(weeks)}.")
+for number, week in enumerate(weeks, 1):
+    if not week.name.startswith(f"week-{number:02d}-"):
+        errors.append(f"Unexpected week order: {week.name}")
+    if not (week / "README.md").is_file(): errors.append(f"Missing README: {week}")
+    for filename in required:
+        path = week / filename
+        if not path.is_file(): errors.append(f"Missing {filename}: {week}")
+        else:
+            text = path.read_text(encoding="utf-8")
+            missing = [section for section in lesson_sections if f"## {section}" not in text]
+            if missing: errors.append(f"Incomplete lesson: {path.relative_to(ROOT)} missing {', '.join(missing)}")
+lesson_count = sum(1 for week in weeks for name in required if (week / name).is_file())
+if lesson_count != 60: errors.append(f"Expected 60 weekday lessons; found {lesson_count}.")
+for path in [ROOT / "README.md", ROOT / "ROADMAP.md", ROOT / "CURRICULUM.md"]:
+    if not path.is_file(): errors.append(f"Missing required overview: {path.name}")
 if errors:
     print("Curriculum validation failed:\n- " + "\n- ".join(errors)); sys.exit(1)
-print("Curriculum validation passed: 10 modules, 100 lessons, required cohort documents present.")
+print("Curriculum validation passed: 12 weeks, 60 weekday lessons.")
