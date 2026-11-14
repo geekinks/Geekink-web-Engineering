@@ -2,7 +2,7 @@
 
 - Student name:
 - GitHub username:
-- Module / day:
+- Week / weekday:
 - Task title:
 - Project repository:
 - Live deployment (if applicable):
