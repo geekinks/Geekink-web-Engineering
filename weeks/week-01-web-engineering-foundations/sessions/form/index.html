@@ -1,22 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeekInk Innovations | Student Registration</title>
 </head>
 <body>
-     <form action="/submit" method="POST">
-            <label for="fullname">Full Name:</label>
-            <input type="text" id="fullname" name="fullname">
+  <header>
+    <h1>GeekInk Innovations Student Registration</h1>
+    <p>Complete this form to register your interest in a GeekInk learning programme.</p>
+  </header>
 
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email">
+  <main>
+    <!-- POST sends form data in the request body; GET adds it to the URL.
+         A real /register endpoint on a server is required to store this data. -->
+    <form action="/register" method="POST" enctype="multipart/form-data">
+      <!-- An id uniquely identifies an element on this page and connects it to a label.
+           A name is the key used when the form data is submitted to the server. -->
+      <fieldset>
+        <legend>Personal information</legend>
 
-            <button type="submit">Submit</button>
-     </form>
+        <!-- type="text" is appropriate for a person's name. required prevents empty submission. -->
+        <p>
+          <label for="full-name">Full name</label><br>
+          <input type="text" id="full-name" name="full_name" autocomplete="name"
+                 placeholder="e.g Adamu " minlength="5" maxlength="80" required>
+        </p>
 
-    
+        <!-- type="email" checks that the value has an email-like format. -->
+        <p>
+          <label for="email">Email address</label><br>
+          <input type="email" id="email" name="email" autocomplete="email"
+                 placeholder="you@example.com" required>
+        </p>
 
+        <!-- type="password" masks characters. minlength requires at least eight characters. -->
+        <p>
+          <label for="password">Create a password</label><br>
+          <input type="password" id="password" name="password" autocomplete="new-password"
+                 placeholder="At least 8 characters" minlength="8" required>
+        </p>
+
+        <!-- type="tel" is useful for telephone numbers and pattern describes the expected format. -->
+        <p>
+          <label for="phone">Phone number</label><br>
+          <input type="tel" id="phone" name="phone" autocomplete="tel"
+                 placeholder="e.g., +234 801 234 5678"
+                 pattern="[0-9+() -]{7,20}" title="Use 7 to 20 digits and phone symbols." required>
+        </p>
+
+        <!-- type="number" accepts numeric values; min and max keep the age within a sensible range. -->
+        <p>
+          <label for="age">Age</label><br>
+          <input type="number" id="age" name="age" min="13" max="120" step="1">
+        </p>
+
+        <!-- type="date" provides a date picker in supporting browsers. -->
+        <p>
+          <label for="date-of-birth">Date of birth</label><br>
+          <input type="date" id="date-of-birth" name="date_of_birth" min="1900-01-01" max="2013-12-31" required>
+        </p>
+
+        <!-- Radio buttons share one name so only one gender option can be selected. -->
+        <fieldset>
+          <legend>Gender</legend>
+          <p><input type="radio" id="gender-woman" name="gender" value="woman" required> <label for="gender-woman">Woman</label></p>
+          <p><input type="radio" id="gender-man" name="gender" value="man"> <label for="gender-man">Man</label></p>
+          <p><input type="radio" id="gender-nonbinary" name="gender" value="nonbinary"> <label for="gender-nonbinary">Non-binary</label></p>
+          <p><input type="radio" id="gender-prefer-not" name="gender" value="prefer-not-to-say"> <label for="gender-prefer-not">Prefer not to say</label></p>
+        </fieldset>
+      </fieldset>
+
+      <fieldset>
+        <legend>Learning information</legend>
+
+        <!-- select, option, and optgroup create a grouped course dropdown. -->
+        <p>
+          <label for="course">Choose a course</label><br>
+          <select id="course" name="course" required>
+            <option value="">Select a course</option>
+            <optgroup label="Web development">
+              <option value="html-css">HTML and CSS Foundations</option>
+              <option value="javascript">JavaScript Essentials</option>
+            </optgroup>
+            <optgroup label="Data and design">
+              <option value="python">Python Programming</option>
+              <option value="ui-ux">UI/UX Design</option>
+            </optgroup>
+          </select>
+        </p>
+
+        <!-- type="search" is for search terms. datalist offers suggestions while allowing other values. -->
+        <p>
+          <label for="course-search">Search for another course</label><br>
+          <input type="search" id="course-search" name="course_search" list="course-suggestions" placeholder="Try “React”">
+          <datalist id="course-suggestions">
+            <option value="React Fundamentals">
+            <option value="Node.js Basics">
+            <option value="Data Analysis">
+            <option value="Product Design">
+          </datalist>
+        </p>
+
+        <!-- Checkboxes may be selected independently, unlike radio buttons. -->
+        <fieldset>
+          <legend>Learning interests</legend>
+          <p><input type="checkbox" id="interest-web" name="interests" value="web-development"> <label for="interest-web">Web development</label></p>
+          <p><input type="checkbox" id="interest-data" name="interests" value="data-analysis"> <label for="interest-data">Data analysis</label></p>
+          <p><input type="checkbox" id="interest-design" name="interests" value="design"> <label for="interest-design">Design</label></p>
+        </fieldset>
+
+        <fieldset>
+          <legend>Learning preference</legend>
+          <p><input type="radio" id="preference-online" name="learning_preference" value="online" required> <label for="preference-online">Online</label></p>
+          <p><input type="radio" id="preference-onsite" name="learning_preference" value="onsite"> <label for="preference-onsite">On site</label></p>
+          <p><input type="radio" id="preference-hybrid" name="learning_preference" value="hybrid"> <label for="preference-hybrid">Hybrid</label></p>
+        </fieldset>
+
+        <p><label for="start-month">Preferred learning start month</label><br><input type="month" id="start-month" name="start_month" min="2026-01" max="2027-12"></p>
+        <p><label for="learning-week">Preferred learning week</label><br><input type="week" id="learning-week" name="learning_week"></p>
+        <p><label for="class-time">Preferred class time</label><br><input type="time" id="class-time" name="class_time" min="08:00" max="20:00" step="900"></p>
+        <p><label for="meeting-time">Preferred meeting date and time</label><br><input type="datetime-local" id="meeting-time" name="meeting_time" min="2026-01-01T08:00"></p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Technical information</legend>
+
+        <!-- type="url" checks for a complete web address. -->
+        <p><label for="portfolio">Portfolio or personal website</label><br><input type="url" id="portfolio" name="portfolio" placeholder="https://example.com"></p>
+
+        <!-- accept limits the file chooser to appropriate file types. -->
+        <p><label for="profile-picture">Upload a profile picture</label><br><input type="file" id="profile-picture" name="profile_picture" accept="image/png, image/jpeg"></p>
+        <p><label for="supporting-documents">Upload supporting document(s)</label><br><input type="file" id="supporting-documents" name="supporting_documents" accept=".pdf,.doc,.docx" multiple></p>
+
+        <!-- type="range" creates a slider. output provides a readable scale without JavaScript. -->
+        <p>
+          <label for="skill-level">Self-assessed programming skill level (1–10)</label><br>
+          <input type="range" id="skill-level" name="skill_level" min="1" max="10" step="1" value="5">
+          <output for="skill-level" name="skill-level-guide">1 = beginner; 10 = advanced</output>
+        </p>
+
+        <p><label for="favourite-colour">Favourite colour</label><br><input type="color" id="favourite-colour" name="favourite_colour" value="#3366cc"></p>
+      </fieldset>
+
+      <fieldset>
+        <legend>Additional information</legend>
+        <p><label for="biography">Short biography</label><br><textarea id="biography" name="biography" rows="5" minlength="20" maxlength="500" placeholder="Tell us briefly about your learning goals."></textarea></p>
+        <p><label for="comments">Additional comments</label><br><textarea id="comments" name="comments" rows="4" maxlength="300" placeholder="Is there anything else we should know?"></textarea></p>
+
+        <!-- readonly fields are submitted but cannot be edited; disabled fields cannot be edited or submitted. -->
+        <p><label for="registration-status">Registration status</label><br><input type="text" id="registration-status" name="registration_status" value="New registration" readonly></p>
+        <p><label for="invitation-code">Invitation code</label><br><input type="text" id="invitation-code" name="invitation_code" value="Not required for this intake" disabled></p>
+        <p><input type="checkbox" id="terms" name="terms_accepted" value="yes" required> <label for="terms">I accept the GeekInk Innovations terms and conditions.</label></p>
+
+        <!-- Hidden inputs carry data without displaying a control, so they do not need a visible label. -->
+        <input type="hidden" id="registration-source" name="registration_source" value="geekink-student-form">
+      </fieldset>
+
+      <fieldset>
+        <legend>Form actions</legend>
+        <!-- submit sends validated data; reset restores the original values; button has no submission behaviour. -->
+        <p><label for="submit-registration">Submit registration</label><br><input type="submit" id="submit-registration" value="Submit registration"></p>
+        <p><label for="reset-form">Reset the form</label><br><input type="reset" id="reset-form" value="Clear all fields"></p>
+        <p><label for="demo-button">Demonstration button</label><br><input type="button" id="demo-button" value="This button does not submit"></p>
+        <p><button type="submit">Register with button element</button></p>
+      </fieldset>
+
+      <!-- Browser validation checks attributes such as required, type, pattern, min, and maxlength before submission.
+           It improves the user experience, but server-side validation is still essential for security. -->
+    </form>
+  </main>
+
+  <footer><p>GeekInk Innovations learning programmes</p></footer>
 </body>
 </html>
